@@ -2,3 +2,25 @@ ID: openSAPHANA5
 _schema-version: '2.1'
 description: Software Development on SAP HANA (Update Q4/2016)
 version: 0.0.1
+modules:
+  - name: web
+    type: html5
+    path: web
+
+
+  - name: core_db
+    type: hdb
+    path: core_db
+    requires:
+     - name: hdi_core_db
+       properties:
+         TARGET_CONTAINER: ~{hdi-container-name}
+
+resources:
+ - name: hdi_core_db
+   parameters:
+      config:
+         schema: OPENSAP_HANA5
+   properties:
+      hdi-container-name: ${service-name}
+   type: com.sap.xs.hdi-container
