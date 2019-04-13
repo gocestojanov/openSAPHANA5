@@ -1,4 +1,13 @@
-PROCEDURE "get_po_header_data"( )
+PROCEDURE "get_po_header_data"( 
+
+		OUT EX_PO_CREATE_CNT TABLE( 
+           CREATE_CNT INTEGER,
+          "HISTORY.CREATEDBY.EMPLOYEEID" NVARCHAR(10)), 
+        OUT EX_PO_CHANGE_CNT TABLE(
+           CHANGE_CNT INTEGER,
+           "HISTORY.CHANGEDBY.EMPLOYEEID"  NVARCHAR(10)) )
+
+
    LANGUAGE SQLSCRIPT
    SQL SECURITY INVOKER
    --DEFAULT SCHEMA <default_schema_name>
@@ -9,14 +18,14 @@ BEGIN
    *************************************/
     
     
-    SELECT COUNT(*) AS CREATE_CNT, "HISTORY.CREATEDBY.EMPLOYEEID" 
+     ex_po_create_cnt =  SELECT COUNT(*) AS CREATE_CNT, "HISTORY.CREATEDBY.EMPLOYEEID" 
          FROM "PO.Header" WHERE PURCHASEORDERID IN (
                          SELECT PURCHASEORDERID 
                               FROM "PO.Item" 
               WHERE "PRODUCT.PRODUCTID" IS NOT NULL)
     GROUP BY  "HISTORY.CREATEDBY.EMPLOYEEID";
     
-    SELECT COUNT(*) AS CHANGE_CNT, "HISTORY.CHANGEDBY.EMPLOYEEID" 
+    ex_po_change_cnt =  SELECT COUNT(*) AS CHANGE_CNT, "HISTORY.CHANGEDBY.EMPLOYEEID" 
          FROM "PO.Header"  WHERE PURCHASEORDERID IN (
                          SELECT PURCHASEORDERID 
                               FROM "PO.Item"
