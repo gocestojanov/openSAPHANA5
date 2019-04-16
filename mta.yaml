@@ -38,6 +38,7 @@ modules:
           url: ${default-url}
     requires:
      - name: hdi_core_db
+     - name: sap.hana.democontent.epm.services.images
 resources:
   - name: hdi_core_db
     properties:
@@ -47,3 +48,9 @@ resources:
     properties:
       user-container-name: '${service-name}'
     type: com.sap.xs.hdi-container
+  - name: sap.hana.democontent.epm.services.images
+    type: org.cloudfoundry.existing-service
+    parameters:
+       service-name: sap.hana.democontent.epm.services.images
+    properties:
+      xshttpdest-images-service-name: ${service-name} 

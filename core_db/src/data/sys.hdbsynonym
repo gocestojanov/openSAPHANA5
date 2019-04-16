@@ -1,8 +1,9 @@
 {
-  "_DUMMY": {
+  "opensaphana5.core_db::_DUMMY": {
     "target": {
       "object": "DUMMY",
-      "schema": "SYS"
+      "schema": "SYS",
+      "database": "SYSTEMDB"
     }
   }
 }
