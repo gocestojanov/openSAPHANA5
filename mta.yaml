@@ -6,21 +6,44 @@ modules:
   - name: web
     type: html5
     path: web
-
-
+    requires:
+      - name: openSAP5-uaa
+      - name: core-js-service
+        group: destinations
+        properties:
+          name: core-backend
+          url: ~{url}
+          forwardAuthToken: true 
+    
   - name: core_db
     type: hdb
     path: core_db
     requires:
-     - name: hdi_core_db
-       properties:
-         TARGET_CONTAINER: ~{hdi-container-name}
+      - name: hdi_core_db
+  - name: user_db
+    type: hdb
+    path: user_db
+    requires:
+      - name: user_container
+        properties:
+          TARGET-CONTAINER: '~{user-container-name}'
 
+  - name: core_js
+    type: nodejs
+    path: core_js
+    provides:
+     - name: openSAP5-uaa
+     - name: core-js-service
+       properties:
+          url: ${default-url}
+    requires:
+     - name: hdi_core_db
 resources:
- - name: hdi_core_db
-   parameters:
-      config:
-         schema: OPENSAP_HANA5
-   properties:
-      hdi-container-name: ${service-name}
-   type: com.sap.xs.hdi-container
+  - name: hdi_core_db
+    properties:
+      hdi-container-name: '${service-name}'
+    type: com.sap.xs.hdi-container
+  - name: user_container
+    properties:
+      user-container-name: '${service-name}'
+    type: com.sap.xs.hdi-container
