@@ -39,6 +39,7 @@ modules:
     requires:
      - name: hdi_core_db
      - name: sap.hana.democontent.epm.services.images
+     - name: CROSS_SCHEMA_SFLIGHT
 resources:
   - name: hdi_core_db
     properties:
@@ -54,3 +55,7 @@ resources:
        service-name: sap.hana.democontent.epm.services.images
     properties:
       xshttpdest-images-service-name: ${service-name} 
+  - name: CROSS_SCHEMA_SFLIGHT    
+    type: org.cloudfoundry.existing-service
+    parameters:
+       service-name: CROSS_SCHEMA_SFLIGHT

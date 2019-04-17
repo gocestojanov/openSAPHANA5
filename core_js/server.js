@@ -24,6 +24,14 @@ try {
 	console.log("[WARN]", err.message);
 }
 
+// Add SqlCC
+try {
+	options.hana.sqlcc = xsenv.getServices({ "xsjs.sqlcc_config": "CROSS_SCHEMA_SFLIGHT"});
+} catch (err) {
+	console.error(err);
+}
+
+
 // start server
 xsjs(options).listen(port);
 
